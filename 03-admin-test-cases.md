@@ -20,7 +20,7 @@
 | **Route** | `/auth/login` → `/admin/dashboard` |
 | **Expected Result** | Toast sukses muncul, redirect ke `/admin/dashboard`, 6 menu sidebar tampil (`Dashboard & Kalender`, `Kelola Pengguna`, `Kalender Akademik`, `Umpan Balik`, `Pengaturan Sistem`, `Audit Logs`) |
 | **Referensi Kode** | `frontend/nextjs/src/app/auth/login/page.tsx:101-125`, `backend/internal/service/auth_service.go:45-100`, `POST /api/v1/auth/login`, `GET /api/v1/admin/overview` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
 
 **Manual Testing Instructions**:
 1. Buka `https://38-9-47-207.sslip.io/auth/login`.
