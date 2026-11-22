@@ -47,7 +47,7 @@ SELECT user_id, ip_address, is_revoked, expires_at FROM public.user_sessions ORD
 | **Route** | `/admin/dashboard` |
 | **Expected Result** | Browser mengunduh file `.csv` dengan 15 kolom header (`ID Janji Temu` s/d `Tanggal Diajukan`) dan toast `"File CSV laporan janji temu berhasil diunduh."` muncul |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/dashboard/page.tsx:147-160`, `backend/internal/service/admin_service.go:183-246`, `GET /api/v1/admin/appointments/export` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: File CSV Berhasil didownload, dan berhasil menampilkan data didalam file CSV |
 
 **Manual Testing Instructions**:
 1. Buka `/admin/dashboard`.
@@ -69,7 +69,7 @@ SELECT user_id, ip_address, is_revoked, expires_at FROM public.user_sessions ORD
 | **Route** | `/admin/users` |
 | **Expected Result** | Toast `"Pengguna QA Student Baru berhasil ditambahkan."` muncul, modal tertutup, user baru tampil di tabel, dan dapat login dengan default password `password123` |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/users/page.tsx:119-180`, `backend/internal/service/admin_service.go:271-342`, `POST /api/v1/admin/users` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Pengguna baru berhasil ditambahkan, dan sistem berhasil memberikan alert |
 
 **Manual Testing Instructions**:
 1. Buka menu `Kelola Pengguna` (`/admin/users`).
@@ -95,7 +95,7 @@ SELECT identifier, name, email, role, is_active FROM public.users WHERE identifi
 | **Route** | `/admin/users` |
 | **Expected Result** | Case A & B ditolak dengan toast `"NIM/NIP wajib berupa angka dan minimal 10 digit."`; Case C ditolak `"Email Dosen wajib menggunakan domain resmi @telkomuniversity.ac.id"`; Case D ditolak backend `"NIM/NIP '1203220154' sudah digunakan"` |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/users/page.tsx:127-156`, `backend/internal/service/admin_service.go:276-304` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil mencegah user memberi NIM di bawah 10 angka, sistem juga berhasil mencegah user untuk mengisi dengan format yang salah (contoh: NIM menggunakan huruf), kemudian sistem juga mencegah user mengisi NIM yang sudah ada / mencegah duplikasi |
 
 **Manual Testing Instructions**:
 1. Di modal tambah pengguna, masukkan Case A (`123456789`) lalu klik simpan → amati error toast.
@@ -116,7 +116,7 @@ SELECT identifier, name, email, role, is_active FROM public.users WHERE identifi
 | **Route** | `/admin/users` |
 | **Expected Result** | Status user berubah `Nonaktif`, seluruh baris `user_sessions` milik user di-set `is_revoked = true`, dan percobaan login ulang user tersebut gagal dengan pesan akun tidak aktif |
 | **Referensi Kode** | `backend/internal/service/admin_service.go:392-394`, `backend/internal/service/auth_service.go:54-56`, `PUT /api/v1/admin/users/:id` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menyimpan status yang baru (non-aktif), kemudian di halaman mahasiswa yang dinon-aktifkan sistem berhasil menampilkan alert bahwa akun sedang di non-aktifkan mohon hubungi administrasi |
 
 **Manual Testing Instructions**:
 1. Di `/admin/users`, cari `1203229901` dan klik ikon Edit.
