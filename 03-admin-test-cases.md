@@ -20,7 +20,7 @@
 | **Route** | `/auth/login` → `/admin/dashboard` |
 | **Expected Result** | Toast sukses muncul, redirect ke `/admin/dashboard`, 6 menu sidebar tampil (`Dashboard & Kalender`, `Kelola Pengguna`, `Kalender Akademik`, `Umpan Balik`, `Pengaturan Sistem`, `Audit Logs`) |
 | **Referensi Kode** | `frontend/nextjs/src/app/auth/login/page.tsx:101-125`, `backend/internal/service/auth_service.go:45-100`, `POST /api/v1/auth/login`, `GET /api/v1/admin/overview` |
-| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil memasukan user ke sesi Admin Dashboard |
 
 **Manual Testing Instructions**:
 1. Buka `https://38-9-47-207.sslip.io/auth/login`.
@@ -143,7 +143,7 @@ SELECT count(*) AS active_sessions FROM public.user_sessions s JOIN public.users
 | **Route** | `/admin/users` |
 | **Expected Result** | Akun `ADMIN` tidak tampil di tabel; klik hapus pada `1203229901` memunculkan `ConfirmModal`; setelah dikonfirmasi, user terhapus dari tabel dan DB |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/users/page.tsx:98`, `backend/internal/service/admin_service.go:399-409`, `DELETE /api/v1/admin/users/:id` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem memberi konfirmasi untuk role yang akan dihapus, kemudian sistem berhasil menghapus role mahasiswa juga sistem berhasil memberikan alert bahwa sistem berhasil menghapus data |
 
 **Manual Testing Instructions**:
 1. Pastikan `Admin Prodi Informatika` tidak muncul pada tabel `/admin/users`.
@@ -186,7 +186,7 @@ SELECT count(*) AS active_sessions FROM public.user_sessions s JOIN public.users
 | **Route** | `/admin/academic-calendar` |
 | **Expected Result** | Jika `end_date < start_date` → ditolak backend `"end_date tidak boleh lebih awal dari start_date"`. Jika valid → tersimpan dengan `is_holiday = true`, tampil di daftar, dan dapat dihapus lewat `ConfirmModal` |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/academic-calendar/page.tsx:68-119`, `backend/internal/service/calendar_service.go:38-102`, `POST/DELETE /api/v1/academic-calendar` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menampilkan pesan error saat tanggal selesai diinput lebih awal dari tanggal mulai, Sistem juga berhasil menyimpan pengisian data yang benar, dan menampilkan alert berhasil |
 
 **Manual Testing Instructions**:
 1. Buka menu `Kalender Akademik` (`/admin/academic-calendar`).
