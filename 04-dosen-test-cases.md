@@ -20,7 +20,7 @@
 | **Route** | `/lecturer/teaching-schedules` |
 | **Expected Result** | Toast `"Jadwal kuliah ... berhasil ditambahkan."` muncul, data tersimpan di `teaching_schedules`, dan tampil sebagai balok jadwal mengajar pada hari Senin jam 13:00–15:30 di `/lecturer/dashboard` |
 | **Referensi Kode** | `frontend/nextjs/src/app/lecturer/teaching-schedules/page.tsx:106-137`, `backend/internal/service/schedule_service.go:38-93`, `POST /api/v1/teaching-schedules` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menyimpan jadwal dosen yang baru saja dibuat, sistem juga menampilkan alert "Berhasil" |
 
 **Manual Testing Instructions**:
 1. Buka menu `Jadwal Kuliah & Blokir` (`/lecturer/teaching-schedules`), pastikan berada pada tab jadwal mengajar.
@@ -46,7 +46,7 @@ SELECT id, day_of_week, start_time, end_time, course_name, room FROM public.teac
 | **Route** | `/lecturer/teaching-schedules` |
 | **Expected Result** | Request ditolak dengan banner & toast error `"jam selesai harus lebih besar dari jam mulai"` |
 | **Referensi Kode** | `backend/internal/service/schedule_service.go:52-66` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem dapat mencegah pengisian jadwal yang salah (jam mulai lebih tinggi daripada jam selesai) dan sistem juga menampilkan alert "Jam selesai harus lebih besar dari jam mulai" |
 
 **Manual Testing Instructions**:
 1. Isi mata kuliah & ruangan, atur Jam Mulai `14:00` dan Jam Selesai `13:00`.
@@ -65,7 +65,7 @@ SELECT id, day_of_week, start_time, end_time, course_name, room FROM public.teac
 | **Route** | `/lecturer/teaching-schedules` → `/lecturer/dashboard` |
 | **Expected Result** | Agenda terblokir tampil pada jam `09:00 - 12:00` di daftar dan di kalender `/lecturer/dashboard`; setelah menekan `Cmd+Shift+R` / `Ctrl+F5`, jam blokir tetap `09:00 - 12:00` (tidak bergeser) |
 | **Referensi Kode** | `frontend/nextjs/src/app/lecturer/teaching-schedules/page.tsx:139-160`, `backend/internal/service/schedule_service.go:253-298`, `POST /api/v1/blocked-schedules` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menyimpan jadwal blokir yang telah dibuat, dan tidak didapati perubahan setelah dilakukan hard refresh |
 
 **Manual Testing Instructions**:
 1. Di `/lecturer/teaching-schedules`, pindah ke tab jadwal terblokir.
@@ -91,7 +91,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/teaching-schedules` |
 | **Expected Result** | Tanggal masa lalu ditolak `"jadwal pemblokiran tidak boleh sebelum hari ini"`; penghapusan item uji memunculkan modal konfirmasi sebelum record dihapus |
 | **Referensi Kode** | `backend/internal/service/schedule_service.go:271-279`, `DELETE /api/v1/blocked-schedules/:id` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem secara otomatis sudah mematikan tanggal "sebelum hari ini" sehingga user tidak dapat menginput tanggal kemarin. Pada penghapusan sistem memberikan konfirmasi, kemudian berhasil menghapus "jadwal terblokir" dan menampilkan alert berhasil menghapus |
 
 **Manual Testing Instructions**:
 1. Coba pilih tanggal sebelum hari ini pada form blokir dan submit → amati pesan penolakan.
@@ -112,7 +112,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/dashboard` atau `/lecturer/appointments` |
 | **Expected Result** | Status berubah menjadi `DISETUJUI` (hijau), balok kalender berubah warna hijau, notifikasi & outbox `APPOINTMENT_APPROVED` terbentuk untuk mahasiswa |
 | **Referensi Kode** | `frontend/nextjs/src/app/lecturer/appointments/page.tsx`, `backend/internal/repository/appointment_repo.go:315-497`, `PATCH /api/v1/appointments/:id/approve` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Kartu permohonan yang dibuat mahasiswa muncul pada bagian dashboard agenda dosen dengan warna kuning sebagai tanda "Permohonan Menunggu Persetujuan" saat disetujui terdapat alert "Berhasil" dan kartu menghilang, berpindah kebagian kalender pada dashboard. |
 
 **Manual Testing Instructions**:
 1. Buka `Agenda Dosen` (`/lecturer/dashboard`) atau `Riwayat Janjian` (`/lecturer/appointments`).
@@ -133,7 +133,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/dashboard` atau `/lecturer/appointments` |
 | **Expected Result** | Submit tanpa alasan ditolak (`"alasan penolakan wajib diisi"`); submit dengan alasan mengubah status menjadi `DITOLAK` dan menerbitkan notifikasi ke mahasiswa |
 | **Referensi Kode** | `backend/internal/service/appointment_service.go:240-251`, `backend/internal/repository/appointment_repo.go:499-592`, `PATCH /api/v1/appointments/:id/reject` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menolak janji temu **tanpa mengisi alasan**, sistem juga berhasil menolak dengan alasan yang terisi, **namun pada instruksi pengujian manual nomor 4 alasan penolakan yang diberikan dosen tidak tampil sama sekali** |
 
 **Manual Testing Instructions**:
 1. Klik tombol `Tolak` pada janji temu yang masih `Menunggu Persetujuan`.
@@ -154,7 +154,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/appointments` |
 | **Expected Result** | Status berubah menjadi `DIBATALKAN`, `cancelled_by` terisi ID dosen, 2 notifikasi tercipta (ke mahasiswa & konfirmasi ke dosen), dan daftar di `/lecturer/appointments` menampilkan pemisah tanggal |
 | **Referensi Kode** | `backend/internal/repository/appointment_repo.go:594-724`, `frontend/nextjs/src/app/lecturer/appointments/page.tsx:42`, `PATCH /api/v1/appointments/:id/cancel` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil memberikan konfirmasi pembatalan serta alasan, sistem berhasil membatalkan janjian dan sistem juga memberikan alert "Berhasil". **Namun tetap pada tab "Ditolak / Batal" bagian detail belum menampilkan alasan yang diberikan oleh dosen.** |
 
 **Manual Testing Instructions**:
 1. Buka `/lecturer/appointments` → tab `Disetujui`.
@@ -177,7 +177,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/availabilities`, `/lecturer/notifications` |
 | **Expected Result** | `/lecturer/availabilities` menampilkan spinner `"Mengalihkan ke Riwayat Janjian..."` lalu redirect ke `/lecturer/appointments`; di `/lecturer/notifications`, klik tandai dibaca menurunkan badge angka `unreadCount` di sidebar |
 | **Referensi Kode** | `frontend/nextjs/src/app/lecturer/availabilities/page.tsx`, `frontend/nextjs/src/app/lecturer/notifications/page.tsx`, `PATCH /api/v1/notifications/:id/read` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: URL "https://38-9-47-207.sslip.io/lecturer/availabilities" sudah otomatis langsung mengarah kepada halaman '/lecturer/appointments`. Pada pusat notifikasi tanda "Sudah dibaca / tandai semua dibaca" bekerja dengan baik, seluruh notifikasi terbaca dan icon sudah tidak menampilkan angka notifikasi |
 
 **Manual Testing Instructions**:
 1. Buka URL `https://38-9-47-207.sslip.io/lecturer/availabilities` → pastikan otomatis berpindah ke `/lecturer/appointments`.
@@ -196,7 +196,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/feedback` |
 | **Expected Result** | Gambar dikompres ke WebP, diunggah langsung ke `/storage/upload/...`, masukan tersimpan dengan status `Menunggu Review`, dan tampil di tab Riwayat Masukan dengan Date Separator `"Hari Ini"` |
 | **Referensi Kode** | `frontend/nextjs/src/app/lecturer/feedback/page.tsx`, `frontend/nextjs/src/components/feedback/FeedbackForm.tsx`, `POST /api/v1/feedbacks` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Kolom "Judul Masukan" dan "Rincian Masukan" sudah bekerja dengan baik, judul dan masukan wajib di isi, kemudian pada bagian drop media gambar sistem berhasil melakukan kompresi gambar  |
 
 **Manual Testing Instructions**:
 1. Buka menu `Beri Masukan` (`/lecturer/feedback`).
@@ -217,7 +217,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 | **Route** | `/lecturer/profile` |
 | **Expected Result** | Profil menampilkan nama Dr. Siti Aminah & NIP yang benar (**UX Observation**: periksa apakah avatar sidebar masih hardcoded `HK`!); akses ke `/admin/users` atau `/student/dashboard` diredirect ke `/lecturer/dashboard`; setelah konfirmasi Logout, diarahkan ke `/auth/login` dengan form kosong |
 | **Referensi Kode** | `frontend/nextjs/src/app/lecturer/profile/page.tsx`, `frontend/nextjs/src/components/navigation/LecturerSidebar.tsx:88` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Bagian avatar yang menampilkan inisial sudah benar dan konsisten. kemudian bagian /admin/user sudah otomatis redirect ke bagian /lecturer/dashboard  |
 
 **Manual Testing Instructions**:
 1. Login sebagai Dr. Siti Aminah (`198807202014042001`).
