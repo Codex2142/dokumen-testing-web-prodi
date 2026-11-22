@@ -214,7 +214,7 @@ SELECT id, title, start_date, end_date, type, is_holiday FROM public.academic_ca
 | **Route** | `/admin/system-settings` |
 | **Expected Result** | Input negatif menampilkan banner error merah `"Durasi minimum tidak boleh lebih besar dari durasi maksimum."`; input valid menampilkan toast hijau sukses dan nilai tetap bertahan setelah reload |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/system-settings/page.tsx:73-109`, `backend/internal/service/settings_service.go:28-60`, `PUT /api/v1/admin/settings/appointment-rules` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Saat durasi minimal di naikkan menjadi 90 menit (lebih besar dari maksimal) sistem tidak dapat menyimpan dan memberikan pesan error "Durasi minimum tidak boleh lebih besar dari durasi maksimum." Sistem berhasil menyimpan saat durasi minimal dikembalikan menjadi 15 menit, sistem juga menampilkan pesan "berhasil" |
 
 **Manual Testing Instructions**:
 1. Buka menu `Pengaturan Sistem` (`/admin/system-settings`).
@@ -267,7 +267,7 @@ SELECT id, title, status, admin_notes, updated_at FROM public.feedbacks ORDER BY
 | **Route** | `/admin/audit-logs` |
 | **Expected Result** | Tabel menampilkan log terbaru, pencarian merespons halus tanpa spam request, klik lihat JSON membuka modal dan tombol Copy menampilkan toast `"Metadata JSON disalin ke clipboard."` |
 | **Referensi Kode** | `frontend/nextjs/src/app/admin/audit-logs/page.tsx`, `GET /api/v1/admin/audit-logs` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil mencari melalui search box dan berhasil memfilter dari dropdown. Sistem juga berhasil menampilkan adata JSON pada baris yang dipilih |
 
 **Manual Testing Instructions**:
 1. Buka menu `Audit Logs` (`/admin/audit-logs`).
@@ -290,7 +290,7 @@ SELECT id, title, status, admin_notes, updated_at FROM public.feedbacks ORDER BY
 | **Route** | `/student/dashboard`, `/lecturer/dashboard` |
 | **Expected Result** | Frontend `RoleGuard` langsung mengembalikan ke `/admin/dashboard`; request langsung ke `POST /api/v1/appointments` mengembalikan HTTP `403 FORBIDDEN` |
 | **Referensi Kode** | `frontend/nextjs/src/components/common/RoleGuard.tsx:31-34`, `backend/cmd/api/main.go:232` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem tetap membawa user kepada halaman login awal. |
 
 **Manual Testing Instructions**:
 1. Saat login sebagai `ADMIN`, ketik manual `https://38-9-47-207.sslip.io/student/dashboard` di address bar → amati redirect kembali ke `/admin/dashboard`.
