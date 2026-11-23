@@ -6,7 +6,7 @@ Dokumen ini menyediakan kumpulan query SQL **read-only** yang 100% menggunakan n
 
 ---
 
-## 1. Cek Kondisi Umum & Jumlah Baris Seluruh 14 Tabel
+## 1. Cek Kondisi Umum & Jumlah Baris Seluruh 15 Tabel
 
 ```sql
 SET search_path TO public;
@@ -145,4 +145,43 @@ ORDER BY f.created_at DESC;
 SELECT fa.id, fa.feedback_id, fa.file_name, fa.file_type, fa.file_size, fa.file_url, fa.created_at
 FROM public.feedback_attachments fa
 ORDER BY fa.created_at DESC;
+```
+
+---
+
+## 8. Verifikasi OTP Reset Password & Audit Kata Sandi (`password_reset_otps`, `user_sessions`, `audit_logs`)
+
+```sql
+-- Cek riwayat OTP reset password terbaru (hash 64-char SHA-256, attempts, kedaluwarsa, status terpakai)
+SELECT u.identifier, u.email, u.role,
+       LEFT(o.otp_hash, 12) || '...' AS otp_hash_preview,
+       o.attempts, o.max_attempts, o.expires_at, o.used_at, o.created_at
+FROM public.password_reset_otps o
+JOIN public.users u ON u.id = o.user_id
+ORDER BY o.created_at DESC
+LIMIT 20;
+
+-- Cek pemakaian kuota harian OTP per user dalam 24 jam terakhir (batas maksimal: 5/24 jam)
+SELECT u.identifier, u.email, COUNT(*) AS otp_requests_last_24h, MAX(o.created_at) AS last_requested_at
+FROM public.password_reset_otps o
+JOIN public.users u ON u.id = o.user_id
+WHERE o.created_at >= NOW() - INTERVAL '24 hours'
+GROUP BY u.identifier, u.email
+ORDER BY otp_requests_last_24h DESC;
+
+-- Cek audit trail khusus aktivitas reset & ubah kata sandi
+SELECT a.action, a.resource, a.status, u.identifier AS actor, a.ip_address, a.metadata, a.created_at
+FROM public.audit_logs a
+LEFT JOIN public.users u ON u.id = a.user_id
+WHERE a.action IN ('PASSWORD_RESET_OTP_REQUESTED', 'PASSWORD_RESET_COMPLETED', 'PASSWORD_CHANGED')
+ORDER BY a.created_at DESC
+LIMIT 20;
+
+-- Pastikan seluruh sesi user sudah dicabut (is_revoked = TRUE) setelah reset/ubah kata sandi
+SELECT u.identifier, s.ip_address, s.is_revoked, s.expires_at, s.created_at
+FROM public.user_sessions s
+JOIN public.users u ON u.id = s.user_id
+WHERE u.identifier = '1203220154'
+ORDER BY s.created_at DESC
+LIMIT 10;
 ```
