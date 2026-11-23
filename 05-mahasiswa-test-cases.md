@@ -20,7 +20,7 @@
 | **Route** | `/student/dashboard` |
 | **Expected Result** | Toast hijau sukses muncul, `BookingBottomSheet` tertutup, janji temu tersimpan dengan status `MENUNGGU_PERSETUJUAN`, tampil di mode `Jadwal Saya` dan di `/student/appointments` tab `Menunggu` |
 | **Referensi Kode** | `frontend/nextjs/src/components/booking/BookingBottomSheet.tsx`, `backend/internal/service/appointment_service.go:56-194`, `POST /api/v1/appointments` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menyimpan jadwal bimbingan, dan kalender juga menampilkan jadwal yang dibuat oleh mahasiswa. Sistem juga menampilkan alert "Berhasil" |
 
 **Manual Testing Instructions**:
 1. Buka `Agenda & Kalender` (`/student/dashboard`).
@@ -47,7 +47,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/dashboard` |
 | **Expected Result** | Case A ditolak `"waktu janji temu tidak boleh di masa lalu"`; Case B ditolak `"durasi pertemuan maksimal 60 menit"`; Case C ditolak `"pemesanan maksimal H+30 ke depan"` |
 | **Referensi Kode** | `backend/internal/service/appointment_service.go:76-96` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Case A sistem berhasil menolak dan menampilkan alert bahwa jam sudah terlewat, Case B Sistem mengunci tombol simpan karena durasi pertemuan melebihi batas maksimal, Case C sistem menolak dan menampilkan alert "Batas H+30 hari" |
 
 **Manual Testing Instructions**:
 1. Buka `BookingBottomSheet`.
@@ -68,7 +68,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/dashboard` |
 | **Expected Result** | Case A ditolak `"Tanggal yang dipilih merupakan hari libur kalender akademik"`; Case B ditolak `"Dosen memiliki jadwal mengajar '[UAT-2026] Arsitektur Komputasi Awan'..."`; Case C ditolak `"Dosen memiliki agenda terblokir: '[UAT-2026] Rapat Senat Kurikulum'..."` |
 | **Referensi Kode** | `backend/internal/service/availability_service.go:248-324` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menampilkan alert bahwa jadwal bertabrakan dengan jadwal mata kuliah dan jadwal blokir |
 
 **Manual Testing Instructions**:
 1. Di `/student/dashboard`, beralih ke mode `Jadwal Dosen`, pilih `Dr. Eng. Hendra Kurniawan`, amati balok kuliah (Senin 13:00–15:30) dan balok blokir (Kamis 09:00–12:00).
@@ -88,7 +88,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/dashboard` |
 | **Expected Result** | `10:30 - 11:00` ditolak bentrok (masuk rentang buffer `09:50–10:40`); `10:45 - 11:15` berhasil diajukan |
 | **Referensi Kode** | `backend/internal/service/availability_service.go:329-346` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: Sistem tetap meloloskan sehingga pada kalender jadwal janjian mengalami duplikasi |
 
 **Manual Testing Instructions**:
 1. Buka `BookingBottomSheet` untuk Dr. Hendra pada Senin pekan depan.
@@ -110,7 +110,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/appointments` |
 | **Expected Result** | Badge angka di tiap tab cocok dengan jumlah kartu; kartu dikelompokkan dengan pemisah tanggal; pencarian menyaring secara real-time; jika hasil kosong muncul Empty State |
 | **Referensi Kode** | `frontend/nextjs/src/app/student/appointments/page.tsx:83-120` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menampilkan dengan benar (cocok), kemudian ketika kata kunci tidak ada sistem menampilkan empty state |
 
 **Manual Testing Instructions**:
 1. Buka menu `Janjian Saya` (`/student/appointments`).
@@ -130,7 +130,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/appointments/[id]` |
 | **Expected Result** | Status berubah menjadi `DIBATALKAN`, kartu tampil di tab `Dibatalkan` dengan alasan tersebut, dan muncul notifikasi `"Pembatalan Janji Temu Berhasil"` di `/student/notifications` |
 | **Referensi Kode** | `frontend/nextjs/src/app/student/appointments/[id]/page.tsx`, `backend/internal/repository/appointment_repo.go:594-724`, `PATCH /api/v1/appointments/:id/cancel` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Janji temu berhasil dibatalkan, sistem juga memberi konfimasi batal dengan form alasan sebelum pembatalan dilakukan, |
 
 **Manual Testing Instructions**:
 1. Buka detail janji temu di `/student/appointments/[id]`.
@@ -151,7 +151,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/appointments/[id]` |
 | **Expected Result** | Request tersimpan dengan status `PENDING` di `appointment_reschedule_requests`; percobaan mengajukan reschedule kedua sebelum yang pertama direspon ditolak (`ErrPendingRescheduleExists`) |
 | **Referensi Kode** | `frontend/nextjs/src/app/student/appointments/[id]/page.tsx:131-160`, `backend/internal/service/reschedule_service.go:51-108`, `POST /api/v1/appointments/:id/reschedule` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan:  |
 
 **Manual Testing Instructions**:
 1. Buka detail janji temu berstatus `Disetujui`.
