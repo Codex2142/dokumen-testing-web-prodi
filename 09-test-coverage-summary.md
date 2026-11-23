@@ -12,19 +12,20 @@ Dokumen ini merangkum seluruh cakupan pengujian berbasis source code aktual (`do
 | **Halaman / Route Frontend**       |           **23**           | 4 Public/Auth (+`/auth/forgot-password`), 6 Admin, 7 Dosen (1 redirect), 6 Mahasiswa                       |
 | **Endpoint Backend API**           |           **47**           | `/healthz`, `/metrics`, dan 45 endpoint di `/api/v1/*` (+3 endpoint password/OTP & 2 Nginx storage routes) |
 | **Tabel Database PostgreSQL**      |           **15**           | 17 migrasi `.up.sql` (+`password_reset_otps`), 6 ENUM, 1 GIST Exclusion Constraint, 1 Trigger              |
-| **Total Test Case Terdokumentasi** |           **61**           | Tersebar di 6 dokumen test case (`03`–`07`, `10`)                                                          |
+| **Total Test Case Terdokumentasi** |           **75**           | Tersebar di 7 dokumen test case (`03`–`07`, `10`–`11`)                                                     |
 
 ### Distribusi Test Case per Role / Dokumen
 
-| Dokumen                         | Fokus Pengujian                               | Jumlah TC | Rentang ID                                             |
-| :------------------------------ | :-------------------------------------------- | :-------: | :----------------------------------------------------- |
-| `03-admin-test-cases.md`        | Role `ADMIN`                                  |  **12**   | `TC-ADM-01` s/d `TC-ADM-11`, `TC-ADM-AUTH-01`          |
-| `04-dosen-test-cases.md`        | Role `DOSEN`                                  |  **10**   | `TC-DSN-01` s/d `TC-DSN-10`                            |
-| `05-mahasiswa-test-cases.md`    | Role `MAHASISWA`                              |  **14**   | `TC-MHS-01` s/d `TC-MHS-11`, `TC-MHS-AUTH-01` s/d `03` |
-| `06-cross-role-test-cases.md`   | Cross-Role & Critical Flows                   |   **5**   | `TC-XROLE-01` s/d `TC-XROLE-05`                        |
-| `07-ux-testing.md`              | 12 Dimensi UX Testing                         |   **8**   | `TC-UX-01` s/d `TC-UX-08`                              |
-| `10-password-otp-test-cases.md` | Lupa Password OTP (SMTP), Ubah Password, & UX |  **12**   | `TC-PWD-01` s/d `TC-PWD-12`                            |
-| **TOTAL**                       |                                               |  **61**   |                                                        |
+| Dokumen                         | Fokus Pengujian                                              | Jumlah TC | Rentang ID                                             |
+| :------------------------------ | :----------------------------------------------------------- | :-------: | :----------------------------------------------------- |
+| `03-admin-test-cases.md`        | Role `ADMIN`                                                 |  **12**   | `TC-ADM-01` s/d `TC-ADM-11`, `TC-ADM-AUTH-01`          |
+| `04-dosen-test-cases.md`        | Role `DOSEN`                                                 |  **10**   | `TC-DSN-01` s/d `TC-DSN-10`                            |
+| `05-mahasiswa-test-cases.md`    | Role `MAHASISWA`                                             |  **14**   | `TC-MHS-01` s/d `TC-MHS-11`, `TC-MHS-AUTH-01` s/d `03` |
+| `06-cross-role-test-cases.md`   | Cross-Role & Critical Flows                                  |   **5**   | `TC-XROLE-01` s/d `TC-XROLE-05`                        |
+| `07-ux-testing.md`              | 12 Dimensi UX Testing                                        |   **8**   | `TC-UX-01` s/d `TC-UX-08`                              |
+| `10-password-otp-test-cases.md` | Lupa Password OTP (SMTP), Ubah Password, & UX                |  **12**   | `TC-PWD-01` s/d `TC-PWD-12`                            |
+| `11-security-test-cases.md`     | Security Testing (IDOR, Auth, Upload, XSS, Injection, Infra) |  **14**   | `TC-SEC-01` s/d `TC-SEC-14`                            |
+| **TOTAL**                       |                                                              |  **75**   |                                                        |
 
 ### Distribusi Test Case per Kategori
 
@@ -71,7 +72,8 @@ _(Catatan: Beberapa test case mencakup lebih dari 1 kategori secara bersamaan.)_
 | `06-cross-role-test-cases.md`   |    5     |      |      |         |                       |
 | `07-ux-testing.md`              |    8     |      |      |         |                       |
 | `10-password-otp-test-cases.md` |    12    |      |      |         |                       |
-| **TOTAL KESELURUHAN**           |  **61**  |      |      |         |                       |
+| `11-security-test-cases.md`     |    14    |      |      |         |                       |
+| **TOTAL KESELURUHAN**           |  **75**  |      |      |         |                       |
 
 ---
 
