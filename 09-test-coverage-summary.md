@@ -6,26 +6,27 @@ Dokumen ini merangkum seluruh cakupan pengujian berbasis source code aktual (`do
 
 ## 1. Ringkasan Metrik Sistem & Cakupan Pengujian
 
-| Metrik                             | Jumlah Aktual (`VERIFIED`) | Keterangan                                                                                                 |
-| :--------------------------------- | :------------------------: | :--------------------------------------------------------------------------------------------------------- |
-| **Role Pengguna**                  |           **3**            | `ADMIN`, `DOSEN`, `MAHASISWA`                                                                              |
-| **Halaman / Route Frontend**       |           **23**           | 4 Public/Auth (+`/auth/forgot-password`), 6 Admin, 7 Dosen (1 redirect), 6 Mahasiswa                       |
-| **Endpoint Backend API**           |           **47**           | `/healthz`, `/metrics`, dan 45 endpoint di `/api/v1/*` (+3 endpoint password/OTP & 2 Nginx storage routes) |
-| **Tabel Database PostgreSQL**      |           **15**           | 17 migrasi `.up.sql` (+`password_reset_otps`), 6 ENUM, 1 GIST Exclusion Constraint, 1 Trigger              |
-| **Total Test Case Terdokumentasi** |           **75**           | Tersebar di 7 dokumen test case (`03`–`07`, `10`–`11`)                                                     |
+| Metrik                             | Jumlah Aktual (`VERIFIED`) | Keterangan                                                                                                                                       |
+| :--------------------------------- | :------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Role Pengguna**                  |           **3**            | `ADMIN`, `DOSEN`, `MAHASISWA`                                                                                                                    |
+| **Halaman / Route Frontend**       |           **24**           | 4 Public/Auth, 7 Admin (+`/admin/notifications`), 7 Dosen (1 redirect), 6 Mahasiswa                                                              |
+| **Endpoint Backend API**           |           **49**           | `/healthz`, `/metrics`, dan 47 endpoint di `/api/v1/*` (+2 endpoint broadcast Admin & 2 Nginx storage routes)                                    |
+| **Tabel Database PostgreSQL**      |           **17**           | 20 migrasi `.up.sql` (+`password_reset_otps`, `appointment_reminders_sent`, `system_broadcasts`), 6 ENUM, 1 GIST Exclusion Constraint, 1 Trigger |
+| **Total Test Case Terdokumentasi** |           **89**           | Tersebar di 8 dokumen test case (`03`–`07`, `10`–`12`)                                                                                           |
 
 ### Distribusi Test Case per Role / Dokumen
 
-| Dokumen                         | Fokus Pengujian                                              | Jumlah TC | Rentang ID                                             |
-| :------------------------------ | :----------------------------------------------------------- | :-------: | :----------------------------------------------------- |
-| `03-admin-test-cases.md`        | Role `ADMIN`                                                 |  **12**   | `TC-ADM-01` s/d `TC-ADM-11`, `TC-ADM-AUTH-01`          |
-| `04-dosen-test-cases.md`        | Role `DOSEN`                                                 |  **10**   | `TC-DSN-01` s/d `TC-DSN-10`                            |
-| `05-mahasiswa-test-cases.md`    | Role `MAHASISWA`                                             |  **14**   | `TC-MHS-01` s/d `TC-MHS-11`, `TC-MHS-AUTH-01` s/d `03` |
-| `06-cross-role-test-cases.md`   | Cross-Role & Critical Flows                                  |   **5**   | `TC-XROLE-01` s/d `TC-XROLE-05`                        |
-| `07-ux-testing.md`              | 12 Dimensi UX Testing                                        |   **8**   | `TC-UX-01` s/d `TC-UX-08`                              |
-| `10-password-otp-test-cases.md` | Lupa Password OTP (SMTP), Ubah Password, & UX                |  **12**   | `TC-PWD-01` s/d `TC-PWD-12`                            |
-| `11-security-test-cases.md`     | Security Testing (IDOR, Auth, Upload, XSS, Injection, Infra) |  **14**   | `TC-SEC-01` s/d `TC-SEC-14`                            |
-| **TOTAL**                       |                                                              |  **75**   |                                                        |
+| Dokumen                                             | Fokus Pengujian                                              | Jumlah TC | Rentang ID                                             |
+| :-------------------------------------------------- | :----------------------------------------------------------- | :-------: | :----------------------------------------------------- |
+| `03-admin-test-cases.md`                            | Role `ADMIN`                                                 |  **12**   | `TC-ADM-01` s/d `TC-ADM-11`, `TC-ADM-AUTH-01`          |
+| `04-dosen-test-cases.md`                            | Role `DOSEN`                                                 |  **10**   | `TC-DSN-01` s/d `TC-DSN-10`                            |
+| `05-mahasiswa-test-cases.md`                        | Role `MAHASISWA`                                             |  **14**   | `TC-MHS-01` s/d `TC-MHS-11`, `TC-MHS-AUTH-01` s/d `03` |
+| `06-cross-role-test-cases.md`                       | Cross-Role & Critical Flows                                  |   **5**   | `TC-XROLE-01` s/d `TC-XROLE-05`                        |
+| `07-ux-testing.md`                                  | 12 Dimensi UX Testing                                        |   **8**   | `TC-UX-01` s/d `TC-UX-08`                              |
+| `10-password-otp-test-cases.md`                     | Lupa Password OTP (SMTP), Ubah Password, & UX                |  **12**   | `TC-PWD-01` s/d `TC-PWD-12`                            |
+| `11-security-test-cases.md`                         | Security Testing (IDOR, Auth, Upload, XSS, Injection, Infra) |  **14**   | `TC-SEC-01` s/d `TC-SEC-14`                            |
+| `12-notifications-reminder-broadcast-test-cases.md` | Email 8 Event + Toggle, Custom Reminder, & Broadcast Admin   |  **14**   | `TC-NTF-01` s/d `TC-NTF-14`                            |
+| **TOTAL**                                           |                                                              |  **89**   |                                                        |
 
 ### Distribusi Test Case per Kategori
 
@@ -64,16 +65,17 @@ _(Catatan: Beberapa test case mencakup lebih dari 1 kategori secara bersamaan.)_
 
 ## 3. Rekap Lembar Kerja Eksekusi QA (Diisi Saat Pengujian Manual)
 
-| Dokumen                         | Total TC | PASS | FAIL | BLOCKED | Tingkat Kelulusan (%) |
-| :------------------------------ | :------: | :--: | :--: | :-----: | :-------------------: |
-| `03-admin-test-cases.md`        |    12    |      |      |         |                       |
-| `04-dosen-test-cases.md`        |    10    |      |      |         |                       |
-| `05-mahasiswa-test-cases.md`    |    14    |      |      |         |                       |
-| `06-cross-role-test-cases.md`   |    5     |      |      |         |                       |
-| `07-ux-testing.md`              |    8     |      |      |         |                       |
-| `10-password-otp-test-cases.md` |    12    |      |      |         |                       |
-| `11-security-test-cases.md`     |    14    |      |      |         |                       |
-| **TOTAL KESELURUHAN**           |  **75**  |      |      |         |                       |
+| Dokumen                                             | Total TC | PASS | FAIL | BLOCKED | Tingkat Kelulusan (%) |
+| :-------------------------------------------------- | :------: | :--: | :--: | :-----: | :-------------------: |
+| `03-admin-test-cases.md`                            |    12    |      |      |         |                       |
+| `04-dosen-test-cases.md`                            |    10    |      |      |         |                       |
+| `05-mahasiswa-test-cases.md`                        |    14    |      |      |         |                       |
+| `06-cross-role-test-cases.md`                       |    5     |      |      |         |                       |
+| `07-ux-testing.md`                                  |    8     |      |      |         |                       |
+| `10-password-otp-test-cases.md`                     |    12    |      |      |         |                       |
+| `11-security-test-cases.md`                         |    14    |      |      |         |                       |
+| `12-notifications-reminder-broadcast-test-cases.md` |    14    |      |      |         |                       |
+| **TOTAL KESELURUHAN**                               |  **89**  |      |      |         |                       |
 
 ---
 

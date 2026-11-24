@@ -6,7 +6,7 @@ Dokumen ini menyediakan kumpulan query SQL **read-only** yang 100% menggunakan n
 
 ---
 
-## 1. Cek Kondisi Umum & Jumlah Baris Seluruh 15 Tabel
+## 1. Cek Kondisi Umum & Jumlah Baris Seluruh 17 Tabel
 
 ```sql
 SET search_path TO public;
@@ -184,4 +184,40 @@ JOIN public.users u ON u.id = s.user_id
 WHERE u.identifier = '1203220154'
 ORDER BY s.created_at DESC
 LIMIT 10;
+```
+
+---
+
+## 9. Verifikasi Preferensi Email, Custom Reminder, & Broadcast Sistem (`users`, `appointment_reminders_sent`, `system_broadcasts`)
+
+```sql
+-- Cek status toggle notifikasi email & menit pengingat seluruh pengguna
+SELECT identifier, name, role, prodi, is_active,
+       email_notifications_enabled, reminder_minutes_before, updated_at
+FROM public.users
+ORDER BY role, identifier;
+
+-- Cek catatan pengingat janji temu yang sudah terkirim (verifikasi anti-duplikat & reschedule)
+SELECT r.id, a.title, u.identifier, u.role, r.scheduled_start_at, r.sent_at
+FROM public.appointment_reminders_sent r
+JOIN public.appointments a ON a.id = r.appointment_id
+JOIN public.users u ON u.id = r.user_id
+ORDER BY r.sent_at DESC
+LIMIT 20;
+
+-- Cek riwayat broadcast notifikasi sistem oleh Admin
+SELECT b.id, u.name AS sender_name, b.title, b.notif_type,
+       b.target_mode, b.target_filter, b.recipient_count, b.created_at
+FROM public.system_broadcasts b
+JOIN public.users u ON u.id = b.sender_id
+ORDER BY b.created_at DESC
+LIMIT 20;
+
+-- Cek audit trail khusus broadcast notifikasi sistem
+SELECT a.action, a.resource, a.status, u.identifier AS actor, a.metadata, a.created_at
+FROM public.audit_logs a
+LEFT JOIN public.users u ON u.id = a.user_id
+WHERE a.action = 'SYSTEM_NOTIFICATION_BROADCAST'
+ORDER BY a.created_at DESC
+LIMIT 20;
 ```
