@@ -259,7 +259,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/appointments/[id]` |
 | **Expected Result** | Backend mengembalikan `403 FORBIDDEN` (`ErrUnauthorizedAppointmentAccess`) dan frontend menampilkan tampilan akses ditolak (`isForbidden = true`) |
 | **Referensi Kode** | `backend/internal/service/appointment_service.go:207-209`, `frontend/nextjs/src/app/student/appointments/[id]/page.tsx:87-120` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem menampilkan akses ditolak |
 
 **Manual Testing Instructions**:
 1. Salin UUID janji temu milik Akbar.
@@ -279,7 +279,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/admin/dashboard`, `/lecturer/dashboard` |
 | **Expected Result** | Frontend redirect ke `/student/dashboard`; API approve mengembalikan `403 FORBIDDEN` |
 | **Referensi Kode** | `frontend/nextjs/src/components/common/RoleGuard.tsx`, `backend/cmd/api/main.go:235` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil mencegah penggantian menajdi /lecturer/dashboard', sistem selalu membawa kembali menjadi `/student/dashboard` |
 
 **Manual Testing Instructions**:
 1. Saat login sebagai Akbar, buka `/admin/dashboard` lalu `/lecturer/dashboard` → pastikan selalu kembali ke `/student/dashboard`.
