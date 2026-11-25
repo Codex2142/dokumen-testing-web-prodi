@@ -194,7 +194,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/feedback` |
 | **Expected Result** | Gambar terkompresi `.webp` (muncul notice hemat % jika > 10%), upload `POST /feedbacks/upload-intent` → `PUT /storage/upload/...` → `POST /feedbacks` sukses, toast `"Terima kasih! Masukan Anda berhasil terkirim ke Tim Pengembang."` muncul, dan kartu tampil di tab Riwayat dengan Date Separator `"Hari Ini"` |
 | **Referensi Kode** | `frontend/nextjs/src/components/feedback/FeedbackForm.tsx`, `MediaDropzone.tsx`, `feedbackService.ts`, `POST /api/v1/feedbacks` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: Untuk pengisian "Judul Masukan" bekerja dengan baik, namun terdapat kejanggalan pada pengisian deskripsi, seluruh button seperti "Bold", "Underline", dll berfungsi namun tidak dengan button bulletpoint dan numbering. Untuk storage sistem berhasil meng-compress gambar dan menyimpan gambar. Kemudian sistem juga berhasil menyimpan feedback sehingga berstatus "Menunggu Review" |
 
 **Manual Testing Instructions**:
 1. Buka menu `Beri Masukan` (`/student/feedback`).
@@ -217,7 +217,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/feedback` |
 | **Expected Result** | Teks yang ditempel ke `LMSRichEditor` tampil dengan warna teks standar gelap (`slate-800`) di latar putih tanpa background hitam, sementara format semantik (`Bold`/`List`) tetap terjaga |
 | **Referensi Kode** | `frontend/nextjs/src/components/feedback/LMSRichEditor.tsx` (`cleanPastedHTML`, `onPaste`, CSS `inherit` protection) |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[ ] FAIL` `[🚫] BLOCKED` — Catatan: Darkmode belum di develop oleh developer |
 
 **Manual Testing Instructions**:
 1. Salin paragraf berwarna putih dari website dark mode.
@@ -237,7 +237,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/feedback` |
 | **Expected Result** | Case A & B ditolak backend `400 VALIDATION_ERROR`; Case C memunculkan toast error `"Format berkas ... tidak didukung. Harap unggah Gambar (PNG/JPG/WebP) atau Video (MP4/WebM)."`; Case D membatasi maksimal 4 file dengan toast error; Case E ditolak Nginx `413` |
 | **Referensi Kode** | `backend/internal/service/feedback_service.go:33-41`, `frontend/nextjs/src/components/feedback/MediaDropzone.tsx:25,36-39,106-108`, `deploy/nginx/conf.d/app.conf` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Karena testing menggunakan macbook sistem dari mac sendiri tidak mengijinkan memasukan file PDF, TXT, dan lainnya selain PNG, JPG, WebP, dan MP4 maka dari itu sistem dari website secara otomatis sudah berhasil mencegah format file tersebut. Sistem dapat mencegah gambar yang dilampirkan terlalu banyak sistem menampilkan pesan "Maksimal melampirkan 4 gambar" |
 
 **Manual Testing Instructions**:
 1. Coba kirim judul 2 huruf (`ab`) dengan konten panjang → amati error.
