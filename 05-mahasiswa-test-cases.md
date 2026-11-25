@@ -297,7 +297,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | API `GET /api/v1/feedbacks/:id` |
 | **Expected Result** | Backend mengembalikan HTTP `403 FORBIDDEN` (`"Akses ditolak: Anda tidak memiliki izin untuk melihat masukan pengguna lain"`); sementara pemilik (`Akbar`) dan `ADMIN` tetap mendapat `200 OK` |
 | **Referensi Kode** | `backend/internal/handler/feedback_handler.go:71-102`, `backend/cmd/api/main.go:287` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: akses Bima ditolak dengan console memberikan pesan error 401 (Unauthorized) |
 
 **Manual Testing Instructions**:
 1. Ambil UUID feedback milik Akbar dari tabel `public.feedbacks`.
