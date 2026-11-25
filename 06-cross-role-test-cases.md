@@ -19,7 +19,7 @@ Dokumen ini menguji skenario **end-to-end lintas peran** (`ADMIN` ↔ `DOSEN` �
 | **Route** | `/student/dashboard` (Mode `Jadwal Dosen`) |
 | **Expected Result** | Kalender Bima menampilkan balok kuning atas nama `Akbar Muhammad Sadat (1203220154)`; modal booking Bima menampilkan peringatan jadwal lain & submit pada jam `10:00 - 10:30` ditolak backend (`"Slot waktu telah diajukan terlebih dahulu oleh mahasiswa lain..."`) |
 | **Referensi Kode** | `backend/internal/service/schedule_service.go:207-242`, `backend/internal/service/availability_service.go:326-346` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: Jadwal yang diajukan akbar terlihat pada kalender dashboard Bima. Sistem meloloskan Bima saat mengajukan pertemuan dengan jam, tanggal, dan waktu yang sama dengan Akbar, sistem tidak menolak dan tidak memberikan pesan bentrok |
 
 **Manual Testing Instructions**:
 1. Login Akbar di browser normal, ajukan janji ke Dr. Hendra Senin `10:00 - 10:30`.
@@ -42,7 +42,7 @@ Dokumen ini menguji skenario **end-to-end lintas peran** (`ADMIN` ↔ `DOSEN` �
 | **Route** | `/student/dashboard` ↔ `/lecturer/dashboard` |
 | **Expected Result** | Dalam ≤ 4 detik setelah Akbar submit, browser Dr. Hendra memunculkan toast `"Pemberitahuan: Ada pembaruan permohonan janji temu masuk."` dan kartu baru muncul tanpa refresh; setelah Dr. Hendra klik `Setujui`, status di sisi Akbar berubah menjadi `DISETUJUI` dan notifikasi `"Janji Temu Disetujui!"` masuk di `/student/notifications` |
 | **Referensi Kode** | `backend/internal/scheduler/outbox_worker.go`, `backend/internal/notification/sse_handler.go`, `frontend/nextjs/src/app/lecturer/dashboard/page.tsx:130-152` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem secara realtime langsung mengupdate bahwa ada janji temu baru yang dibuat oleh mahasiswa |
 
 **Manual Testing Instructions**:
 1. Biarkan Dr. Hendra standby di `/lecturer/dashboard` (jangan refresh manual).
