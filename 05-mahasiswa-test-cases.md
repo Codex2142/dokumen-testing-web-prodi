@@ -151,7 +151,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/appointments/[id]` |
 | **Expected Result** | Request tersimpan dengan status `PENDING` di `appointment_reschedule_requests`; percobaan mengajukan reschedule kedua sebelum yang pertama direspon ditolak (`ErrPendingRescheduleExists`) |
 | **Referensi Kode** | `frontend/nextjs/src/app/student/appointments/[id]/page.tsx:131-160`, `backend/internal/service/reschedule_service.go:51-108`, `POST /api/v1/appointments/:id/reschedule` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan:  |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: Re-Schedule tidak dapat dilaksanakan di tanggal berapapun, sistem selalu menampilkan alert **"Tidak ada slot ketersediaan pada tanggal ini. Silakan pilih tanggal lain."** padahal dosen tidak terdapat kegiatan apapun,  |
 
 **Manual Testing Instructions**:
 1. Buka detail janji temu berstatus `Disetujui`.
@@ -172,7 +172,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 | **Route** | `/student/appointments` → Tab `Selesai` → `/student/appointments/[id]` |
 | **Expected Result** | Tombol batalkan/reschedule tidak aktif di UI; jika dipaksa via API `PATCH /appointments/:id/cancel` ditolak backend (`ErrCannotCancelAppointment`) dan dilindungi trigger DB `trg_prevent_cancellation` |
 | **Referensi Kode** | `backend/migrations/000014_enforce_appointment_completed_and_anti_cancellation.up.sql`, `backend/internal/repository/appointment_repo.go:245-256,632` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Pada janji temu yang sudah selesai tidak didapati button "Batalkan Janji Temu" |
 
 **Manual Testing Instructions**:
 1. Buka tab `Selesai` di `/student/appointments` dan klik detail janji temu yang sudah selesai.
