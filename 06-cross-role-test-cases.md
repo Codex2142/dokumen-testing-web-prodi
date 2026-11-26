@@ -70,7 +70,7 @@ SELECT event_type, status, retry_count, processed_at FROM public.notification_ou
 | **Route** | `/student/appointments/[id]` ↔ `PATCH /api/v1/reschedule-requests/:id/respond` |
 | **Expected Result** | Permohonan `PENDING` tersimpan; jika direspon `ACCEPT` oleh Dr. Hendra, status request menjadi `ACCEPTED` dan jam janji temu bergeser ke `10:30 - 11:00`; jika Akbar mencoba merespon request sendiri via API → ditolak `ErrSameUserResponse` |
 | **Referensi Kode** | `backend/internal/repository/reschedule_repo.go:164-250`, `backend/internal/service/reschedule_service.go:128-140` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[❌] FAIL` `[ ] BLOCKED` — Catatan: saat dosen menyetujui, pada bagian akbar dan dosen saat di cek pada tanggal schedule tidak terdapat update sama sekali |
 
 **Manual Testing Instructions**:
 1. Di sesi Akbar (`/student/appointments/[id]`), ajukan reschedule ke Rabu `10:30 - 11:00`.
@@ -93,7 +93,7 @@ SELECT event_type, status, retry_count, processed_at FROM public.notification_ou
 | **Route** | `/student/feedback` ↔ `/admin/feedbacks` |
 | **Expected Result** | Admin melihat judul, konten rich HTML (`LMSRichRenderer`), dan gambar dari `/storage/uploads/...`; setelah Admin menyimpan evaluasi, Akbar membuka `/student/feedback` → tab Riwayat dan melihat badge hijau `Selesai Dibenahi` beserta catatan admin |
 | **Referensi Kode** | `frontend/nextjs/src/app/student/feedback/page.tsx`, `frontend/nextjs/src/app/admin/feedbacks/page.tsx`, `AdminFeedbackDetailModal.tsx` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Feedback dari akbar terkirim, kemudian admin merubah status menjadi "selesai dibenahi", kemudian di user akbar, riwayat masukan sudah ter-update sesuai dengan yang di update oleh admin |
 
 **Manual Testing Instructions**:
 1. Login Akbar → kirim feedback berlampiran 1 screenshot PNG di `/student/feedback`.
@@ -116,7 +116,7 @@ SELECT event_type, status, retry_count, processed_at FROM public.notification_ou
 | **Route** | `/admin/system-settings` ↔ `/student/dashboard` |
 | **Expected Result** | Pengajuan 60 menit langsung ditolak `"durasi pertemuan maksimal 45 menit"`; setelah selesai uji, kembalikan `max_minutes` ke `60` |
 | **Referensi Kode** | `backend/internal/service/settings_service.go`, `backend/internal/service/appointment_service.go:70-82` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem berhasil menolak saat oleh admin diubah durasi maksimalnya |
 
 **Manual Testing Instructions**:
 1. Di sesi Admin (`/admin/system-settings`), ubah `Durasi Maksimal` ke `45` lalu simpan.
