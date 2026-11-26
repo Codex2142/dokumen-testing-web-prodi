@@ -77,7 +77,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 
 ---
 
-#### TC-MHS-04 — Validasi Buffer 10 Menit Antar Janji Temu
+#### TC-MHS-04 — Validasi Buffer 10 Menit Antar Janji Temu `READY FOR RE-TEST`
 | Field | Description |
 |---|---|
 | **Test Category** | Boundary / Negative |
@@ -140,7 +140,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 
 ---
 
-#### TC-MHS-07 — Pengajuan Reschedule dari Halaman Detail (`/student/appointments/[id]`)
+#### TC-MHS-07 — Pengajuan Reschedule dari Halaman Detail (`/student/appointments/[id]`) `READY FOR RE-TEST`
 | Field | Description |
 |---|---|
 | **Test Category** | Functional / Negative / Boundary |
@@ -183,7 +183,7 @@ SELECT id, title, category, start_at, end_at, status FROM public.appointments OR
 
 ### Feature: Masukan Pengguna (`/student/feedback`), LMS Editor, & Direct Storage
 
-#### TC-MHS-09 — Pengiriman Masukan dengan `LMSRichEditor` + `MediaDropzone` (WebP & Video Direct Upload)
+#### TC-MHS-09 — Pengiriman Masukan dengan `LMSRichEditor` + `MediaDropzone` (WebP & Video Direct Upload) `READY FOR RE-TEST`
 | Field | Description |
 |---|---|
 | **Test Category** | Functional / Integration |
