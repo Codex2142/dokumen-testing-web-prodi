@@ -122,7 +122,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 
 ---
 
-#### TC-DSN-06 — Penolakan Janji Temu dengan Validasi Alasan Wajib (`MENUNGGU_PERSETUJUAN` → `DITOLAK`)
+#### TC-DSN-06 — Penolakan Janji Temu dengan Validasi Alasan Wajib (`MENUNGGU_PERSETUJUAN` → `DITOLAK`) `READY FOR RE-TEST`
 | Field | Description |
 |---|---|
 | **Test Category** | State & Lifecycle / Negative |
@@ -143,7 +143,7 @@ SELECT id, start_at, end_at, reason FROM public.lecturer_blocked_schedules ORDER
 
 ---
 
-#### TC-DSN-07 — Pembatalan Janji Temu oleh Dosen & Date Separator Riwayat
+#### TC-DSN-07 — Pembatalan Janji Temu oleh Dosen & Date Separator Riwayat `READY FOR RE-TEST`
 | Field | Description |
 |---|---|
 | **Test Category** | State & Lifecycle / UX |
