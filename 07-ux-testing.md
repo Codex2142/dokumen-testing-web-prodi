@@ -27,7 +27,7 @@ Isu UX yang sebelumnya terdeteksi pada analisis source code telah **diperbaiki s
 | **Route** | Multi-route |
 | **Expected Result** | Dropdown heading `LMSRichEditor` dan filter status admin memiliki border, radius, & tipografi selaras; warna badge konsisten (Amber = Menunggu, Emerald = Disetujui/Selesai Dibenahi, Rose = Ditolak, Slate = Diarsipkan/Blokir) |
 | **Referensi Kode** | `LMSRichEditor.tsx`, `admin/feedbacks/page.tsx`, `AdminFeedbackDetailModal.tsx` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Label button, warna badge status dan gaya dropdown pada sistem sudah konsisten |
 
 **UX Observation**: Amati apakah pengguna langsung memahami perbedaan status `Menunggu Review`, `Sedang Ditindaklanjuti`, `Selesai Dibenahi`, dan `Diarsipkan`. Catat jika ada teks terpotong atau kontras rendah.
 
@@ -44,7 +44,7 @@ Isu UX yang sebelumnya terdeteksi pada analisis source code telah **diperbaiki s
 | **Route** | `/auth/login`, `/student/feedback`, `/admin/system-settings` |
 | **Expected Result** | Error login tampil dalam banner merah + toast yang jelas; catat penggunaan native `alert()` pada `MediaDropzone` sebagai observasi perbaikan UX |
 | **Referensi Kode** | `auth/login/page.tsx:187-194`, `MediaDropzone.tsx:106-108` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Setiap feedback dan alert yang diberkan oleh sistem sudah menggunakan bahasa yang mudah dipahami dan konsisten dalam penulisan bahasa Indonesia |
 
 ---
 
@@ -74,7 +74,7 @@ Isu UX yang sebelumnya terdeteksi pada analisis source code telah **diperbaiki s
 | **Route** | Semua halaman dengan aksi hapus/batal/logout |
 | **Expected Result** | `ConfirmModal` muncul dengan backdrop blur, tombol `Batal` menutup modal tanpa perubahan, tombol konfirmasi mengeksekusi aksi |
 | **Referensi Kode** | `ConfirmModal.tsx`, `AdminSidebar.tsx:24`, `admin/academic-calendar/page.tsx:44` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Sistem telah memberi konfirmasi saat user ingin melakukan Logout, hapus user, hapus kalender, hapus jadwal kuliah/blokir, batalkan janji temu |
 
 ---
 
@@ -89,7 +89,7 @@ Isu UX yang sebelumnya terdeteksi pada analisis source code telah **diperbaiki s
 | **Route** | `/student/dashboard`, `/student/profile`, `/lecturer/dashboard`, `/lecturer/profile` |
 | **Expected Result** | Nama & NIM/NIP cocok di seluruh komponen; **Observasi Khusus**: verifikasi temuan inisial avatar sidebar (`AS` / `HK`) yang tidak berubah mengikuti user login |
 | **Referensi Kode** | `StudentSidebar.tsx:83`, `LecturerSidebar.tsx:88`, `student/profile/page.tsx:61-70` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: identitas pada user mulai dari NIM, inisial nama, dan avatar sudah konsisten |
 
 ---
 
@@ -119,7 +119,7 @@ Isu UX yang sebelumnya terdeteksi pada analisis source code telah **diperbaiki s
 | **Route** | `/admin/*`, `/lecturer/*`, `/student/*` |
 | **Expected Result** | Tidak ada scrollbar horizontal; bottom navigation tidak menutupi tombol submit (`pb-24` memadai); modal detail dapat di-scroll dengan lancar |
 | **Referensi Kode** | `AdminSidebar.tsx:54`, `BottomNav.tsx`, `BookingBottomSheet.tsx` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[✅] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: Hamburger pada mode responsif juga sudah berfungsi dengan baik |
 
 ---
 
@@ -134,4 +134,4 @@ Isu UX yang sebelumnya terdeteksi pada analisis source code telah **diperbaiki s
 | **Route** | `/auth/login`, `/student/dashboard`, `/admin/feedbacks` |
 | **Expected Result** | Tombol `Escape` menutup `BookingBottomSheet` dan `AdminFeedbackDetailModal` (termasuk Lightbox secara bertahap); catat kekurangan `aria-label` pada tombol refresh `/admin/feedbacks` |
 | **Referensi Kode** | `BookingBottomSheet.tsx:140-149`, `AdminFeedbackDetailModal.tsx:86-95`, `admin/feedbacks/page.tsx:143-152` |
-| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan: |
+| **Status QA** | `[ ] PASS` `[ ] FAIL` `[ ] BLOCKED` — Catatan:  |
